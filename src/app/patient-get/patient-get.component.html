@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="form-group mb-4" style="padding-top:20px">
+    <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Search">
+  </div>
+    <table class="table table-hover" *ngIf="(patients | filter: searchText).length > 0; else noResults">
+        <thead>
+        <tr>
+          <td>#</td>
+          <td>Name</td>
+          <td>Gender</td>
+          <td>Taj Number</td>
+          <td>Medical History</td>
+          <td>Visited</td>
+          <td colspan="2">Actions</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let patient of patients | filter: searchText; let i = index">
+          <th scope="row">{{i + 1}}</th>
+          <td>{{ patient.pname }}</td>
+          <td>{{ patient.gender }}</td>
+          <td>{{ patient.taj_number }}</td>
+          <td>{{ patient.medical_history }}</td>
+
+          <div class="form-check">
+            <input
+              mdbCheckbox
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="flexCheckDefault"
+              [checked]="false"
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              Visited
+            </label>
+          </div>
+          
+          <td><a [routerLink]="['/patient-edit', patient._id]" class="btn btn-primary">Edit</a></td>
+          <td><a (click) = "deletePatient(patient._id)" class="btn btn-danger" style="color: white">Delete</a></td>
+        </tr>
+        <!--<td><a [routerLink]="['/vizsgalat-patient', patients]" class="btn btn-primary">Vizsgalat</a></td>-->
+        </tbody>
+      </table>
+      <ng-template #noResults>
+        <p>No results found for "{{searchText}}".</p>
+      </ng-template>
+
+      <!--<section class="example-section">
+        <mat-checkbox class="example-margin">Check me!</mat-checkbox>
+      </section>-->
+</div>
